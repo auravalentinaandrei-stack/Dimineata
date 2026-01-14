@@ -97,7 +97,7 @@ h1{text-align:center}
   </button>
 
   <input type="file" id="importFile" accept=".json" style="display:none">
-</div>
+<div id="mesajImport" style="margin-top:10px;font-weight:bold;"></div>
 
 <button onclick="resetZiNoua()" style="background:#e67e22;color:white;padding:8px 14px;border:none;border-radius:10px;font-weight:bold;margin-left:10px">
   Zi noua (reset selectii)
@@ -336,13 +336,20 @@ function exportData(){
 }
 async function importData(){
   try{
+    mesajImport.innerHTML = "⏳ Se importă datele...";
+    mesajImport.style.color = "green";
+
     const r = await fetch("./date.json", { cache: "no-store" });
     if(!r.ok) throw new Error("Nu gasesc date.json in aplicatie!");
+
     const data = await r.json();
     aplicaTot(data);
-    console.log("✅ Import reusit din date.json");
+
+    mesajImport.innerHTML = "✅ Import reușit din date.json!";
+    mesajImport.style.color = "green";
   }catch(e){
-    console.log("❌ Eroare import:", e.message);
+    mesajImport.innerHTML = "❌ Eroare import: " + e.message;
+    mesajImport.style.color = "red";
   }
 }
 document.getElementById("importFile").addEventListener("change",function(){
