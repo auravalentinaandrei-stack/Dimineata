@@ -335,16 +335,17 @@ function exportData(){
  a.click();
 }
 async function importData(){
-  if(!confirm("Sigur vrei sa incarci setarile salvate?")) return;
-
   try{
-    const r = await fetch("./date.json", { cache:"no-store" });
+    const r = await fetch("./date.json", { cache: "no-store" });
     if(!r.ok) throw new Error("Nu gasesc date.json in aplicatie!");
     const data = await r.json();
     aplicaTot(data);
-    alert("Setarile au fost importate din aplicatie ✅");
+
+    // ✅ confirmare vizibila in pagina (fara popup)
+    raport.innerHTML = "<b>✅ Import reușit din date.json!</b><br><br>" + raport.innerHTML;
+
   }catch(e){
-    alert("Eroare import: " + e.message);
+    raport.innerHTML = "<b style='color:red'>❌ Eroare import: " + e.message + "</b>";
   }
 }
 document.getElementById("importFile").addEventListener("change",function(){
