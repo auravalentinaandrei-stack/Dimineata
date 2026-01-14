@@ -185,6 +185,18 @@ document.querySelectorAll(".zone").forEach(z=>{
   e.preventDefault();
   z.querySelector("span").innerText=dragged;
  });
+ // ✅ CLICK pe zilele saptamanii (pentru touch)
+// Pune pe rand: IERI -> AZI -> MAINE
+let pozZi = 0; // 0=ieri, 1=azi, 2=maine
+
+document.querySelectorAll(".day").forEach(d=>{
+  d.addEventListener("click", ()=>{
+    if(pozZi===0) { ieri.innerText = d.innerText; pozZi = 1; return; }
+    if(pozZi===1) { azi.innerText  = d.innerText; pozZi = 2; return; }
+    maine.innerText = d.innerText;
+    pozZi = 0;
+  });
+});
 });
 
 /* DATA */
@@ -196,6 +208,16 @@ for(let i=1;i<=31;i++)listaZile.innerHTML+=`<div class="drag zi" draggable="true
  ["Octombrie","toamna"],["Noiembrie","toamna"],["Decembrie","iarna"]
 ].forEach(l=>listaLuni.innerHTML+=`<div class="drag ${l[1]}" draggable="true">${l[0]}</div>`);
 for(let a=2024;a<=2035;a++)listaAni.innerHTML+=`<div class="drag an" draggable="true">${a}</div>`;
+ // ✅ CLICK pe tabla (alternativa la drag&drop)
+listaZile.addEventListener("click", (e)=>{
+  if(e.target.classList.contains("drag")) ziua.innerText = e.target.innerText;
+});
+listaLuni.addEventListener("click", (e)=>{
+  if(e.target.classList.contains("drag")) luna.innerText = e.target.innerText;
+});
+listaAni.addEventListener("click", (e)=>{
+  if(e.target.classList.contains("drag")) anul.innerText = e.target.innerText;
+});
 
 /* COPII */
 let copii=JSON.parse(localStorage.getItem("copii"))||[];
