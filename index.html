@@ -340,12 +340,9 @@ async function importData(){
     if(!r.ok) throw new Error("Nu gasesc date.json in aplicatie!");
     const data = await r.json();
     aplicaTot(data);
-
-    // ✅ confirmare vizibila in pagina (fara popup)
-    raport.innerHTML = "<b>✅ Import reușit din date.json!</b><br><br>" + raport.innerHTML;
-
+    console.log("✅ Import reusit din date.json");
   }catch(e){
-    raport.innerHTML = "<b style='color:red'>❌ Eroare import: " + e.message + "</b>";
+    console.log("❌ Eroare import:", e.message);
   }
 }
 document.getElementById("importFile").addEventListener("change",function(){
